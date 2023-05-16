@@ -44,9 +44,27 @@ def revenue_per_region(dp: DataProcessor) -> Dict:
     }
     """
     ######################################## YOUR CODE HERE ##################################################
+    dr_gen = (row for row in dp.data_reader)
+    next(dr_gen)
 
+    agg_dict = {}
+    for r in dr_gen:
+        if r['Country'] in agg_dict:
+            agg_dict[r['Country']] += dp.to_float(r['TotalPrice'])
+        else:
+            agg_dict[r['Country']] = dp.to_float(r['TotalPrice'])
+    
+    return agg_dict
     ######################################## YOUR CODE HERE ##################################################
 
+if __name__ == '__main__':
+    
+    dp = DataProcessor('/workspace/course-python-4-production/data/tst/2015.csv')
+    ## cols = ['StockCode','Description','UnitPrice','Quantity','TotalPrice','Country','InvoiceNo','Date']
+
+    print(revenue_per_region(dp))
+
+    
 
 def get_sales_information(file_path: str) -> Dict:
     # Initialize

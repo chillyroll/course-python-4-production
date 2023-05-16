@@ -112,6 +112,15 @@ class DataReader:
         }
         """
     ######################################## YOUR CODE HERE ##################################################
+    # - Read file
+    # - Loop over rows
+    # - create dict
+    # - Yielf dict
+        for r in open(self._fp, 'r'):
+            values = r.strip('\n').split(self._sep)
+            result = {key:value for key, value in zip(self._col_names, values)}
+            yield result
+
 
     ######################################## YOUR CODE HERE ##################################################
 
@@ -120,4 +129,16 @@ class DataReader:
 
     def get_column_names(self):
         return self._col_names
+    
 
+if __name__ == '__main__':
+
+    cols = ['StockCode','Description','UnitPrice','Quantity','TotalPrice','Country','InvoiceNo','Date']
+
+    dr = DataReader('/workspace/course-python-4-production/data/tst/2015.csv', ',', cols)
+
+    dr_gen = (row for row in dr)
+
+    print(next(dr_gen))
+    print(next(dr_gen))
+    print(next(dr_gen))

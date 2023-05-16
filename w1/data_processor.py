@@ -80,4 +80,30 @@ class DataProcessor:
         """
         ######################################## YOUR CODE HERE ##################################################
 
+        # - Initialize the data reader
+        # - skip first row
+        # - Iterate on the rows
+        # - Aggregate column
+
+        # self.data_reader = DataReader(fp=file_path, sep=self._sep, col_names=self._col_names)
+        # cols = ['StockCode','Description','UnitPrice','Quantity','TotalPrice','Country','InvoiceNo','Date']
+        dr_gen = (row for row in self.data_reader)
+        next(dr_gen)
+
+        agg_result = 0
+        for r in dr_gen:
+            agg_result += self.to_float(r[column_name])
+        return agg_result
+
+
+        # dr = data_reader('/workspace/course-python-4-production/data/tst/2015.csv', ',', cols)
+
         ######################################## YOUR CODE HERE ##################################################
+if __name__ == '__main__':
+    
+    dp = DataProcessor('/workspace/course-python-4-production/data/tst/2015.csv')
+    ## cols = ['StockCode','Description','UnitPrice','Quantity','TotalPrice','Country','InvoiceNo','Date']
+
+    result = dp.aggregate('TotalPrice')
+
+    print(result)
